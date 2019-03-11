@@ -5,19 +5,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import javax.ejb.Stateless;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 @Stateless
 public class SomeBean
 {
 
-    @JsonProperty("IDD")
+    @JsonProperty("UID")
     private String id;
     @JsonIgnore
-    private double somedoubleField;
+    private double someDoubleField;
 
     public String getId()
     {
@@ -29,14 +25,14 @@ public class SomeBean
         this.id = id;
     }
 
-    public double getSomedoubleField()
+    public double getSomeDoubleField()
     {
-        return somedoubleField;
+        return someDoubleField;
     }
 
-    public void setSomedoubleField(double somedoubleField)
+    public void setSomeDoubleField(double someDoubleField)
     {
-        this.somedoubleField = somedoubleField;
+        this.someDoubleField = someDoubleField;
     }
 
     public SomeBean()
@@ -58,7 +54,7 @@ public class SomeBean
             return true;
         if (!(other instanceof SomeBean))
             return false;
-        SomeBean othersmbTest = (SomeBean)other;
-        return this.toString().equals(othersmbTest.toString());
+        SomeBean otherSmbTest = (SomeBean)other;
+        return this.toString().equals(otherSmbTest.toString());
     }
 }

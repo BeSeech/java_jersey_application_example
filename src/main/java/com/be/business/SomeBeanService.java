@@ -10,12 +10,12 @@ public class SomeBeanService
 {
     private HashMap<String, SomeBean> someBeanMap = new HashMap<String, SomeBean>();
 
-    private boolean issmbTestInCash(String id)
+    private boolean isSmbTestInCash(String id)
     {
         return (someBeanMap.getOrDefault(id, null) != null);
     }
 
-    public SomeBean getsmbTest(String id)
+    public SomeBean getSmbTest(String id)
     {
         return someBeanMap.getOrDefault(id, null);
     }
@@ -29,9 +29,9 @@ public class SomeBeanService
         return OperationResult.ok();
     }
 
-    public OperationResult addsmbTest(SomeBean someBean)
+    public OperationResult addSmbTest(SomeBean someBean)
     {
-        if (issmbTestInCash(someBean.getId())) {
+        if (isSmbTestInCash(someBean.getId())) {
             return OperationResult.error("SomeBean with this id already exists");
         }
 
@@ -40,9 +40,9 @@ public class SomeBeanService
         return OperationResult.ok();
     }
 
-    public OperationResult updatesmbTest(SomeBean someBean) throws Exception
+    public OperationResult updateSmbTest(SomeBean someBean) throws Exception
     {
-        if (issmbTestInCash(someBean.getId())) {
+        if (isSmbTestInCash(someBean.getId())) {
             return OperationResult.error("SomeBean is not found");
         }
         someBeanMap.put(someBean.getId(), someBean);
