@@ -23,7 +23,7 @@ public class JiraApi {
         client.register(feature);
 
         WebTarget baseTarget = client.target(config.baseUrl);
-        WebTarget request = baseTarget.path("issue/" + issueId).queryParam("fields", "summary,status");
+        WebTarget request = baseTarget.path(new JiraUrl().issue().id(issueId).getUrl()).queryParam("fields", "summary,status");
         Invocation.Builder invocationBuilder = request.request(MediaType.APPLICATION_JSON);
         System.out.println("getBoardById =before= sysout");
         logger.debug("getIssueById =before=");

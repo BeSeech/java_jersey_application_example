@@ -62,12 +62,12 @@ public class SomeResource {
         return Response.status(Response.Status.NOT_FOUND.getStatusCode(), or.getErrorMessage()).build();
     }
 
-    private ArrayList<CardForPost> updateCardsFromIssues(CardList cardList) {
+    private ArrayList<CardForPost> updateCardsFromIssues(String boardId, CardList cardList) {
         ArrayList<CardForPost> result = new ArrayList<>();
-        if (BoardInfo.version <= cardList.Version) {
-            BoardInfo.version = cardList.Version;
+        if (BoardInfo.getVersion(boardId) <= cardList.Version) {
+            BoardInfo.setVersion(boardId, cardList.Version);
         }
-        logger.debug("New board version is : " + BoardInfo.version);
+        logger.debug("New board version is : " + BoardInfo.getVersion(boardId));
         for (int c = 0; c < cardList.cards.size(); c++) {
             logger.debug("Updating card with ExternalCardID: " + cardList.cards.get(c).ExternalCardID);
             Issue issue = IssueService.getIssue(cardList.cards.get(c).ExternalCardID.trim());
@@ -86,17 +86,17 @@ public class SomeResource {
         logger.debug("Proxy to board id: " + id);
 
         CardList cardList = CardService.getCardsWithJiraHeaders(id);
-        return updateCardsFromIssues(cardList);
+        return updateCardsFromIssues(id, cardList);
     }
 
     @GET
     @Path("/proxy/{id}/update")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<CardForPost> getBoardCardsUpdateProxy(@PathParam("id") String id) throws Exception {
-        logger.debug("Proxy to update board id " + id + " from board version " + BoardInfo.version);
+        logger.debug("Proxy to update board id " + id + " from board version " + BoardInfo.getVersion(id));
 
-        CardList cardList = CardService.getUpdatedCardsWithJiraHeaders(id, BoardInfo.version);
-        return updateCardsFromIssues(cardList);
+        CardList cardList = CardService.getUpdatedCardsWithJiraHeaders(id, BoardInfo.getVersion(id));
+        return updateCardsFromIssues(id, cardList);
     }
 
 
